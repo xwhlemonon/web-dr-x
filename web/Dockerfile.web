@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN corepack enable && pnpm install --frozen-lockfile
 
-COPY public src index.html vite.config.js ./
+COPY . .
 RUN pnpm run build
 
 FROM nginx:latest AS base
