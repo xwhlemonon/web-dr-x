@@ -1,0 +1,18 @@
+FROM node:18 AS builder
+
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN corepack enable && pnpm install --frozen-lockfile
+
+COPY ./public ./src ./index.html ./vite.config.ts ./
+RUN pnpm run build
+
+FROM nginx:latest AS base
+
+RUN rm -rf /etc/nginx/conf.d/*
+
+COPY docker/nginx/ /etc/nginx/
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
