@@ -13,6 +13,9 @@ RUN rm -rf /etc/nginx/conf.d/*
 
 COPY docker/nginx/ /etc/nginx/
 COPY --from=builder /app/dist /usr/share/nginx/html
+RUN chown -R nginx:nginx /usr/share/nginx/html/dist
+
+USER nginx
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
