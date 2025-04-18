@@ -6,6 +6,7 @@ RUN corepack enable && pnpm install --frozen-lockfile
 
 COPY . .
 RUN pnpm run build
+RUN ls -l /app/dist
 
 FROM nginx:latest AS base
 
