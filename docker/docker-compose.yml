@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
   web:
-    image: web:latest
+    image: dr-x/web:latest
     build:
       context: ../web
-      dockerfile: ../Dockerfile
+      dockerfile: ../web/Dockerfile
     container_name: web
     restart: always
     ports:
