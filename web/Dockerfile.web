@@ -6,15 +6,13 @@ RUN corepack enable && pnpm install --frozen-lockfile
 
 COPY . .
 RUN pnpm run build
-RUN ls -l /app/dist
 
 FROM nginx:latest AS base
 
 RUN rm -rf /etc/nginx/conf.d/*
 
 COPY docker/nginx/ /etc/nginx/
-COPY --from=builder /app/dist /usr/share/nginx/html
-RUN ls -l /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html/dist
 RUN chown -R nginx:nginx /usr/share/nginx/html
 
 USER nginx
